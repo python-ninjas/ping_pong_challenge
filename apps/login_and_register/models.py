@@ -82,6 +82,11 @@ class User(models.Model):
     email = models.CharField(max_length=255)
     username = models.CharField(max_length=255)
     pw_hash = models.CharField(max_length=255)
+    skill = models.IntegerField(default = 0)
+    experience = models.IntegerField(default = 0)
+    totalscore = models.IntegerField(default = 0)
+    wins = models.IntegerField(default = 0)
+    losses = models.IntegerField(default = 0)
     objects = UserManager()
     def __str__(self):
         return self.first_name,self.last_name
