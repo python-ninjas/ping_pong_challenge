@@ -24,6 +24,8 @@
 		<input type="text" name="first_name" value="{{ request.session.first_name }}"><br>
 		<label for="last_name">Last name:</label>
 		<input type="text" name="last_name" value="{{ request.session.last_name }}"><br>
+		<label for="username">Username:</label>
+		<input type="text" name="username" value="{{ request.session.username }}"><br>
 		<label for="email">Email:</label>
 		<input type="email" name="email" value="{{ request.session.email }}"><br>
 		<label for="password">Password:</label>
@@ -38,8 +40,8 @@
 	<form action="./login" method="post">
 		{% csrf_token %}
 		<h1>Login</h1>
-		<label for="email">Email:</label>
-		<input type="email" name="email"><br>
+		<label for="username">Username:</label>
+		<input type="text" name="username"><br>
 		<label for="password">Password:</label>
 		<input type="password" name="password"><br>
 		<div class="right">

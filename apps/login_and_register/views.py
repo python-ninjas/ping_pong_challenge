@@ -18,13 +18,13 @@ def login(request):
 
     errors = []
 
-    email = request.POST['email']
+    username = request.POST['username']
     # pw_hash = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())
 
-    if len(User.objects.filter(email=email)) > 0:
-        if bcrypt.checkpw(request.POST['password'].encode(), User.objects.filter(email=email).first().pw_hash.encode()):
+    if len(User.objects.filter(username=username)) > 0:
+        if bcrypt.checkpw(request.POST['password'].encode(), User.objects.filter(username=username).first().pw_hash.encode()):
             print "Password MATCHES"
-            user = User.objects.filter(email=email).first()
+            user = User.objects.filter(username=username).first()
             request.session["id"] = user.id
             messages.success(request, 'Successfully logged in!')
             return redirect('./success')
