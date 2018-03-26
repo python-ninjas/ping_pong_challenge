@@ -13,7 +13,8 @@ class UserManager(models.Manager):
         feedback = {
             'first_name': postData['first_name'],
             'last_name': postData['last_name'],
-            'email': postData['email']
+            'email': postData['email'],
+            'username':postData['username']
         }
 
         result = {
@@ -40,6 +41,10 @@ class UserManager(models.Manager):
         elif not NAME_REGEX.match(postData['last_name']):
             errors.append('Last name must be letters only.')
             feedback["last_name"] = ""
+        if len(postData['username']) < 1: 
+            errors.append('Please enter a username.')
+        elif len(postData['username']) < 5:
+            errors.append('Username must be at least 5 characters long.')
         if len(postData['email']) < 1:
             errors.append('Please enter an email.')
         elif not EMAIL_REGEX.match(postData['email']):
@@ -62,7 +67,7 @@ class UserManager(models.Manager):
         else:
             result['status'] = True
             pw_hash = bcrypt.hashpw(postData['password'].encode(), bcrypt.gensalt())
-            user = User.objects.create(first_name = postData['first_name'],last_name = postData['last_name'],email = postData['email'],pw_hash = pw_hash)
+            user = User.objects.create(first_name = postData['first_name'],last_name = postData['last_name'], username = postData['username'], email = postData['email'],pw_hash = pw_hash)
             result['user_id'] = user.id
 
         result['feedback'] = feedback        
@@ -75,6 +80,7 @@ class User(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
+    username = models.CharField(max_length=255)
     pw_hash = models.CharField(max_length=255)
     objects = UserManager()
     def __str__(self):
