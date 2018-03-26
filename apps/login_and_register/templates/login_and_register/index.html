@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login &#38; Register Home</title>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'login_and_register/css/style.css' %}">
+</head>
+<body>
+
+	{% if messages %}
+	<div class="messages">
+		{% for message in messages %}
+		<p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>		
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	{% if request.session.id == 0 %}
+
+	<form action="./register" method="post">
+		{% csrf_token %}
+		<h1>Registration</h1>
+		<label for="first_name">First name:</label>
+		<input type="text" name="first_name" value="{{ request.session.first_name }}"><br>
+		<label for="last_name">Last name:</label>
+		<input type="text" name="last_name" value="{{ request.session.last_name }}"><br>
+		<label for="email">Email:</label>
+		<input type="email" name="email" value="{{ request.session.email }}"><br>
+		<label for="password">Password:</label>
+		<input type="password" name="password"><br>
+		<label for="cpassword">Confirm pw:</label>
+		<input type="password" name="cpassword"><br>
+		<div class="right">
+			<input type="submit" value="Register">
+		</div>
+	</form>
+
+	<form action="./login" method="post">
+		{% csrf_token %}
+		<h1>Login</h1>
+		<label for="email">Email:</label>
+		<input type="email" name="email"><br>
+		<label for="password">Password:</label>
+		<input type="password" name="password"><br>
+		<div class="right">
+			<input type="submit" value="Login">
+		</div>
+	</form>
+
+	{% else %}
+
+    <h1>Logout</h1>
+
+    <p>You know you want to <a href="./logout">logout</a>, {{ user.first_name }}!</p>
+
+	{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+*
+{
+	margin: 0px;
+	padding: 0px;
+}
+
+html
+{
+	background: linear-gradient(#FFFFFF,#FFFF88);
+	background-color: #FFFF88;
+	font-family: Tahoma;
+	height: 100%;
+}
+
+body
+{
+	width: 800px;
+	margin: auto;
+	padding-top: 100px;
+}
+
+form
+{
+	background: linear-gradient(#DDFFFF,#BBFFFF);
+	background-color: #00FFFF;
+	display: inline-block;
+	width: 310px;
+	margin: 20px;
+	padding: 20px;
+	vertical-align: top;
+	border: 1px solid black;
+	border-top-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+}
+
+label
+{
+	display: inline-block;
+	width: 35%;
+	text-align: right;
+}
+
+input
+{
+	width: 60%;
+}
+
+input[type='submit']
+{
+	width: auto;
+}
+
+label
+{
+	margin-top: 10px;
+}
+
+.right
+{
+	text-align: right;
+	margin: 10px;
+}
+
+.error
+{
+	color: red;
+}
+
+.success
+{
+	color: green;
+}
+
+.messages
+{
+	text-align: center;
+}
