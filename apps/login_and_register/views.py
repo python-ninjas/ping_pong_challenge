@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
 from django.contrib.messages import get_messages
+from ..simgame.models import Game
 from models import *
 
 # Create your views here.
@@ -9,10 +10,7 @@ def index(request):
         request.session['id'] = 0
         return render(request,'login_and_register/index.html')
     elif request.session['id'] > 0:
-        context = {
-            'user': User.objects.filter(id = request.session['id']).first()
-        }
-        return render(request,'login_and_register/home.html',context)
+        return redirect('/home')
     
 
 def login(request):
@@ -75,7 +73,10 @@ def register(request):
 def home(request):
     if 'id' not in request.session:
         return redirect('./')
+    user = User.objects.filter(id = request.session['id']).first()
     context = {
-        'user': User.objects.filter(id = request.session['id']).first()
+        'user': user,
+        'wins': user.wins.count(),
+        'losses': user.losses.count()
     }
     return render(request,'login_and_register/home.html',context)
