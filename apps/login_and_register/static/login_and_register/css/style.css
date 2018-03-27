@@ -2,52 +2,286 @@
 {
 	margin: 0px;
 	padding: 0px;
+    outline: none;
+    text-decoration: none;
 }
 
 html
 {
-	background: linear-gradient(#FFFFFF,#FFFF88);
-	background-color: #FFFF88;
-	font-family: Tahoma;
+	background: linear-gradient(to right, #00FFFF,#FFFFFF,#00FFFF);
+	font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+	vertical-align: middle;
 	height: 100%;
+}
+
+body > *:hover, body > *:focus, body > *:active
+{
+	opacity: 1;
 }
 
 body
 {
-	width: 800px;
-	margin: auto;
-	padding-top: 100px;
+	display: block;
+	min-height: 100%;
+	text-align: center;
+	margin: 2.5% auto;
+	padding-right: 5px;
 }
+
+/* HEADERS */
+
+h1, h2, h3, h4, h5, h6
+{
+	margin: 10px 0px;
+	text-align: center;
+	color: rgba();
+}
+
+/* PARAGRAPHS */
+
+p
+{
+	padding: 5px;
+	opacity: 0.5;
+}
+
+/* WIDTH */
+
+.width-33
+{
+	width: 33%;
+}
+
+.width-50
+{
+	width: 50%;
+}
+
+.width-67
+{
+	width: 67%;
+}
+
+.width-100
+{
+	width: 96%;
+}
+
+/* ROUND BORDERS */
+
+.round
+{
+	border-radius: 20px;
+	margin: 20px 0px;
+}
+
+.round-top
+{
+	display: block;
+	margin-top: 20px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+}
+
+.round-bottom
+{
+	display: block;
+	margin-bottom: 20px;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+}
+
+.round-left
+{
+	margin-left: 20px;
+	border-top-left-radius: 20px;
+	border-bottom-left-radius: 20px;
+}
+
+.round-right
+{
+	margin-right: 20px;
+	border-top-right-radius: 20px;
+	border-bottom-right-radius: 20px;
+}
+
+@media only screen and (min-width: 900px) {
+	.responsive-left
+	{
+		margin-right: -2px;
+		border-top-left-radius: 20px;
+		border-bottom-left-radius: 20px;
+		height: 500px;
+	}
+
+	.responsive-right
+	{
+		margin-left: -2px;
+		border-top-right-radius: 20px;
+		border-bottom-right-radius: 20px;
+		height: 500px;
+	}
+}
+
+@media only screen and (max-width: 899px) {
+	html
+	{
+		font-size: 1.5em;
+	}
+	.responsive-left
+	{
+		display: block;
+		margin: auto;
+		width: 85%;
+		max-width: 700px;
+		border-top-left-radius: 20px;
+		border-top-right-radius: 20px;
+		text-align: center;
+	}
+
+	.responsive-right
+	{
+		display: block;
+		margin: auto;
+		width: 85%;
+		max-width: 700px;
+		border-bottom-left-radius: 20px;
+		border-bottom-right-radius: 20px;
+		text-align: center;
+	}
+	.width-33, .width-50, .width-67, .width-100
+	{
+		width: 96%;
+	}
+}
+
+/* TABLES */
+
+table, tr
+{
+	min-width: 100%;
+}
+
+tbody > tr > *
+{
+	text-align: right;
+}
+
+/* COLUMNS */
+
+.column
+{
+	display: inline-block;
+	vertical-align: top;
+	margin: 0px -2px;
+}
+
+.column-cell > *
+{
+	width: auto;
+}
+
+.column-cell, body>form
+{
+	background: linear-gradient(to right, #FFFF88,#FFFFFF,#FFFF88);
+	background-color: #BBFFFF;
+	display: inline-block;
+	width: 92%;
+	padding: 2%;
+	vertical-align: top;
+	box-shadow: 2px 2px 2px 2px black;
+}
+
+/* FORMS */
 
 form
 {
-	background: linear-gradient(#DDFFFF,#BBFFFF);
-	background-color: #00FFFF;
-	display: inline-block;
-	width: 310px;
-	margin: 20px;
-	padding: 20px;
-	vertical-align: top;
-	border: 1px solid black;
-	border-top-left-radius: 20px;
-	border-bottom-right-radius: 20px;
+	min-width: 300px;
+	max-width: 400px;
 }
 
 label
 {
 	display: inline-block;
-	width: 35%;
+	margin: 0.25em;
+	width: 30%;
+	max-width: 150px;
+	font-size: 1.1em;
 	text-align: right;
 }
 
 input
 {
+	font-size: 1.1em;
+}
+
+input[type='text'], input[type='email'], input[type='password']
+{
+	background: linear-gradient(to right, #FFFFFF,#FFFF88);
 	width: 60%;
+	padding: 0.25em;
+	border-radius: 20px;
+}
+
+input:hover
+{
+	background: none;
+	background-color: white;
+}
+
+input:focus
+{
+	background: linear-gradient(#FFFF88,#FFFFFF,#FFFF88);
 }
 
 input[type='submit']
 {
-	width: auto;
+	font-size: 2.25em;
+	padding: 10px;
+}
+
+/* BUTTONS */
+
+.btn
+{
+	font-size: 2.25em;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 2px 2px 2px 2px black;
+}
+
+.btn:hover, .btn:focus, .btn:active
+{
+	background: linear-gradient(#FFFFFF,#FFFF88);
+	background-color: #FFFF88;
+}
+
+.btn-red:hover, .btn-red:focus, .btn-red:active
+{
+	border: 1px solid #660000;
+	color: #660000;
+}
+
+.btn-green:hover, .btn-green:focus, .btn-green:active
+{
+	border: 1px solid #006600;
+	color: #006600;
+}
+
+.btn-green
+{
+	background: linear-gradient(#006600,#003300);
+	background-color: #006600;
+	border: 1px solid #006600;
+	color: white;
+}
+
+.btn-red
+{
+	background: linear-gradient(#660000,#330000);
+	background-color: #660000;
+	border: 1px solid #660000;
+	color: white;	
 }
 
 label
@@ -55,23 +289,66 @@ label
 	margin-top: 10px;
 }
 
-.right
-{
-	text-align: right;
-	margin: 10px;
-}
-
+/* MESSAGES */
 .error
 {
+	display: inline-block;
+	background-color: red;
+	width: 100%;
+	color: white;
+}
+
+.error:hover
+{
+	background-color: white;
 	color: red;
+}
+
+.error:first-child, .success:first-child
+{
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+}
+
+.error:last-child, .success:last-child
+{
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
 }
 
 .success
 {
+	background-color: green;
+	color: white;
+}
+
+.success:hover
+{
+	background-color: white;
 	color: green;
 }
 
 .messages
 {
+	margin: 5px;
+	position: relative;
 	text-align: center;
+	margin-bottom: -10px;
+	border: 1px solid white;
+	box-shadow: 2px 2px 2px 2px black;
+	border-radius: 20px;
+}
+
+/* ALIGNMENT */
+.left
+{
+	text-align: left;
+}
+.center
+{
+	text-align: center;
+}
+.right
+{
+	text-align: right;
 }
