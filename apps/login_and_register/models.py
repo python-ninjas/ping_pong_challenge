@@ -85,8 +85,8 @@ class User(models.Model):
     skill = models.IntegerField(default = 0)
     experience = models.IntegerField(default = 0)
     totalscore = models.IntegerField(default = 0)
-    wins = models.IntegerField(default = 0)
-    losses = models.IntegerField(default = 0)
+    num_wins = models.IntegerField(default = 0)
+    num_losses = models.IntegerField(default = 0)
     objects = UserManager()
     def __str__(self):
         return self.first_name,self.last_name

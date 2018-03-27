@@ -5,12 +5,15 @@ from models import *
 
 # Create your views here.
 def index(request):
-    if 'id' not in request.session:
+    if 'id' not in request.session or request.session['id'] == 0 :
         request.session['id'] = 0
-    context = {
-        'user': User.objects.filter(id = request.session['id']).first()
-    }
-    return render(request,'login_and_register/index.html',context)
+        return render(request,'login_and_register/index.html')
+    elif request.session['id'] > 0:
+        context = {
+            'user': User.objects.filter(id = request.session['id']).first()
+        }
+        return render(request,'login_and_register/home.html',context)
+    
 
 def login(request):
     if request.method != 'POST':
@@ -68,3 +71,11 @@ def register(request):
         for key in response['feedback']:
             request.session[key] = response['feedback'][key]
         return redirect('./')
+
+def home(request):
+    if 'id' not in request.session:
+        return redirect('./')
+    context = {
+        'user': User.objects.filter(id = request.session['id']).first()
+    }
+    return render(request,'login_and_register/home.html',context)

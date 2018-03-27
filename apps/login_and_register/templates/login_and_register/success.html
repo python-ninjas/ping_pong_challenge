@@ -5,10 +5,14 @@
 	<title>Login &#38; Register</title>
 	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static 'login_and_register/css/style.css' %}">
+	<style>
+		body
+		{
+			background: url('{% static 'login_and_register/img/ping_pong.png' %}');
+		}
+	</style>
 </head>
 <body>
-
-	<h1>Success!<br>Welcome, {{ user.username }}!</h1>
 
 	{% if messages %}
 	<div class="messages">
@@ -18,7 +22,15 @@
 	</div>
 	{% endif %}
 
-	<a href="./">Go Back</a>
+
+	<div class="column width-67">
+		<div class="column-cell round-top">
+			<h1>Success!<br>Welcome, {{ user.username }}!</h1>
+		</div>
+		<div class="column-cell round-bottom">
+			<a href="./">Go Dashboard</a>
+		</div>
+	</div>
 
 </body>
 </html>
