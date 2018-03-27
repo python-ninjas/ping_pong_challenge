@@ -40,11 +40,11 @@ def play(request):
         x.experience += 2 * y.skill
         y.experience += 10 * x.skill
         messages.success(request,'You lose! Better luck next time!')
-    while x.experience >= x.skill * 30:
-        x.experience -= x.skill * 30     #Level up! Accounts for gaining multiple levels in a single game, too. 
+    while x.experience >= x.skill * 50 + 1:
+        x.experience -= x.skill * 50 + 1     #Level up! Accounts for gaining multiple levels in a single game, too. 
         x.skill += 1
-    while y.experience >= y.skill * 50:
-        y.experience -= y.skill * 50     
+    while y.experience >= y.skill * 50 + 1:
+        y.experience -= y.skill * 50 + 1    
         y.skill += 1
     x.save()
     y.save()
