@@ -75,7 +75,13 @@ class User(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
+    username = models.CharField(max_length=255)
     pw_hash = models.CharField(max_length=255)
+    skill = models.IntegerField(default = 0)
+    experience = models.IntegerField(default = 0)
+    totalscore = models.IntegerField(default = 0)
+    #Sorry to change the database again, but I realized that we didn't need to store the wins and losses
+    #in this model since we can access them using a query into the Game model. 
     objects = UserManager()
     def __str__(self):
         return self.first_name,self.last_name

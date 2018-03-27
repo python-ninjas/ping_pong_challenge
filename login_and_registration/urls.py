@@ -18,4 +18,5 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^', include('apps.login_and_register.urls')),
+    url(r'^play/', include('apps.simgame.urls'))
 ]
