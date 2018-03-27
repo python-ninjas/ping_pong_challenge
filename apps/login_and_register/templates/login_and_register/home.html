@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login &#38; Register Home</title>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'login_and_register/css/style.css' %}">
+	<style>
+		body
+		{
+			background: url('{% static 'login_and_register/img/ping_pong.png' %}');
+		}
+	</style>
+</head>
+<body>
+
+	{% if messages %}
+	<div class="messages">
+		{% for message in messages %}
+		<p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>		
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	<div class="column width-67">
+		<div class="column-cell round-top">
+			<h1>Your Profile</h3>
+		</div>
+		<div class="column-cell">
+			<table>
+				<tr>
+					<th>Skill</th>
+					<th>Experience</th>
+					<th>Total Points</th>
+					<th>Wins/Losses</th>
+				</tr>
+				<tr>
+					<td>{{ user.skill }}</td>
+					<td>{{ user.experience }}</td>
+					<td>{{ user.totalscore }}</td>
+					<td>{{ user.num_wins }}/{{ user.num_losses }}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="column-cell round-bottom">
+			<h2>Chart</h2>
+		</div>
+	</div>
+
+	<div class="column width-33">
+		<a href="/play"><input type="submit" class="btn btn-green round-top width-100" value="Play Game"></button></a><a href="/logout"><input type="submit" class="btn btn-red round-bottom width-100" value="Log Out"></button></a>
+		<div class="column-cell round">
+			Log goes here....
+		</div>
+	</div>
+
+	<p>Logged in as <strong>{{ user.username }}</strong> ({{ user.first_name }} {{ user.last_name }})</p>
+
+</body>
+</html>

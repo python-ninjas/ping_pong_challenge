@@ -5,12 +5,15 @@ from models import *
 
 # Create your views here.
 def index(request):
-    if 'id' not in request.session:
+    if 'id' not in request.session or request.session['id'] == 0 :
         request.session['id'] = 0
-    context = {
-        'user': User.objects.filter(id = request.session['id']).first()
-    }
-    return render(request,'login_and_register/index.html',context)
+        return render(request,'login_and_register/index.html')
+    elif request.session['id'] > 0:
+        context = {
+            'user': User.objects.filter(id = request.session['id']).first()
+        }
+        return render(request,'login_and_register/home.html',context)
+    
 
 def login(request):
     if request.method != 'POST':
@@ -18,13 +21,13 @@ def login(request):
 
     errors = []
 
-    email = request.POST['email']
+    username = request.POST['username']
     # pw_hash = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())
 
-    if len(User.objects.filter(email=email)) > 0:
-        if bcrypt.checkpw(request.POST['password'].encode(), User.objects.filter(email=email).first().pw_hash.encode()):
+    if len(User.objects.filter(username=username)) > 0:
+        if bcrypt.checkpw(request.POST['password'].encode(), User.objects.filter(username=username).first().pw_hash.encode()):
             print "Password MATCHES"
-            user = User.objects.filter(email=email).first()
+            user = User.objects.filter(username=username).first()
             request.session["id"] = user.id
             messages.success(request, 'Successfully logged in!')
             return redirect('./success')
@@ -68,3 +71,11 @@ def register(request):
         for key in response['feedback']:
             request.session[key] = response['feedback'][key]
         return redirect('./')
+
+def home(request):
+    if 'id' not in request.session:
+        return redirect('./')
+    context = {
+        'user': User.objects.filter(id = request.session['id']).first()
+    }
+    return render(request,'login_and_register/home.html',context)

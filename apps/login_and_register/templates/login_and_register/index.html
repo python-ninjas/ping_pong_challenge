@@ -4,6 +4,12 @@
 	<title>Login &#38; Register Home</title>
 	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static 'login_and_register/css/style.css' %}">
+	<style>
+		body
+		{
+			background: url('{% static 'login_and_register/img/ping_pong.png' %}');
+		}
+	</style>
 </head>
 <body>
 
@@ -15,45 +21,37 @@
 	</div>
 	{% endif %}
 
-	{% if request.session.id == 0 %}
+	<form class="responsive-left" action="./login" method="post">
+		{% csrf_token %}
+		<h1>Login</h1>
+		<label for="username">Username:</label>
+		<input type="text" name="username"><br>
+		<label for="password">Password:</label>
+		<input type="password" name="password"><br>
+		<div class="center">
+			<input type="submit" value="Login" class="btn btn-green round width-100">
+		</div>
+	</form>
 
-	<form action="./register" method="post">
+	<form class="responsive-right" action="./register" method="post">
 		{% csrf_token %}
 		<h1>Registration</h1>
 		<label for="first_name">First name:</label>
 		<input type="text" name="first_name" value="{{ request.session.first_name }}"><br>
 		<label for="last_name">Last name:</label>
 		<input type="text" name="last_name" value="{{ request.session.last_name }}"><br>
+		<label for="username">Username:</label>
+		<input type="text" name="username" value="{{ request.session.username }}"><br>
 		<label for="email">Email:</label>
 		<input type="email" name="email" value="{{ request.session.email }}"><br>
 		<label for="password">Password:</label>
 		<input type="password" name="password"><br>
 		<label for="cpassword">Confirm pw:</label>
 		<input type="password" name="cpassword"><br>
-		<div class="right">
-			<input type="submit" value="Register">
+		<div class="center">
+			<input type="submit" value="Register" class="btn btn-green round width-100">
 		</div>
 	</form>
-
-	<form action="./login" method="post">
-		{% csrf_token %}
-		<h1>Login</h1>
-		<label for="email">Email:</label>
-		<input type="email" name="email"><br>
-		<label for="password">Password:</label>
-		<input type="password" name="password"><br>
-		<div class="right">
-			<input type="submit" value="Login">
-		</div>
-	</form>
-
-	{% else %}
-
-    <h1>Logout</h1>
-
-    <p>You know you want to <a href="./logout">logout</a>, {{ user.first_name }}!</p>
-
-	{% endif %}
 
 </body>
 </html>
