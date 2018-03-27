@@ -105,7 +105,19 @@ p
 	border-bottom-right-radius: 20px;
 }
 
-@media only screen and (min-width: 900px) {
+@media all and (orientation: portrait) {
+	html
+	{
+		font-size: 1.5em;
+	}
+
+	.width-33, .width-50, .width-67, .width-100
+	{
+		width: 96%;
+	}
+}
+
+@media only screen and (min-width: 890px) {
 	.responsive-left
 	{
 		margin-right: -2px;
@@ -123,11 +135,20 @@ p
 	}
 }
 
-@media only screen and (max-width: 899px) {
-	html
+@media only screen and (min-width: 768px) {
+
+	.vertical
 	{
-		font-size: 1.5em;
+		display: none;
 	}
+
+	.horizontal > td, th
+	{
+		width: 25%;
+	}
+}
+
+@media only screen and (max-width: 889px) {
 	.responsive-left
 	{
 		display: block;
@@ -149,22 +170,26 @@ p
 		border-bottom-right-radius: 20px;
 		text-align: center;
 	}
-	.width-33, .width-50, .width-67, .width-100
+}
+
+@media only screen and (max-width: 767px) {
+	.horizontal
 	{
-		width: 96%;
+		display: none;
+	}
+
+	.vertical > td, th
+	{
+		width: 50%;
 	}
 }
+
 
 /* TABLES */
 
 table, tr
 {
 	min-width: 100%;
-}
-
-tbody > tr > *
-{
-	text-align: right;
 }
 
 /* COLUMNS */
@@ -196,7 +221,7 @@ tbody > tr > *
 
 form
 {
-	min-width: 300px;
+	min-width: 150px;
 	max-width: 400px;
 }
 
