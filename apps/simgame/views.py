@@ -8,7 +8,7 @@ from random import *
 # Create your views here.
 def index(request):
     context = {
-        'opponents' : User.objects.exclude(id=request.session['id'])
+        'opponents' : User.objects.exclude(id=request.session['id']).order_by("-skill")
     }
    
     return render(request,'simgame/index.html',context)
