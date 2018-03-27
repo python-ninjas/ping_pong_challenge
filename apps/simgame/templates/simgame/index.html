@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Match Options</title>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'login_and_register/css/style.css' %}">
+</head>
+<body>
+    <h2>Choose your opponent!</h2>
+    <form action="/play/game" method="post">
+        <select name="opp_id">
+            {% for opponent in opponents %}
+                <option value={{opponent.id}}>{{opponent.username}} | {{opponent.skill}}</option>
+            {% endfor %}
+        </select>
+        <h3>Play to how many points?</h3>
+        <input type=number name="maxpoints" min="1" max="21">
+        <br>
+        <input type="submit" value="Begin Game">
+    </form>
+    <br> 
+    
+    
+    <form action='/home'>
+        <input type="submit" value="Cancel">
+    </form>
+</body>
+</html>

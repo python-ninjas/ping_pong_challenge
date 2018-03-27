@@ -7,8 +7,11 @@ from random import *
 
 # Create your views here.
 def index(request):
+    context = {
+        'opponents' : User.objects.exclude(id=request.session['id'])
+    }
    
-    return render(request,'simgame/index.html')
+    return render(request,'simgame/index.html',context)
 
 def play(request):
     p1points = 0
