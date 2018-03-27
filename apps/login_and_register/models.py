@@ -82,7 +82,7 @@ class User(models.Model):
     email = models.CharField(max_length=255)
     username = models.CharField(max_length=255)
     pw_hash = models.CharField(max_length=255)
-    skill = models.IntegerField(default = 0)
+    skill = models.IntegerField(default = 1)
     experience = models.IntegerField(default = 0)
     totalscore = models.IntegerField(default = 0)
     #Sorry to change the database again, but I realized that we didn't need to store the wins and losses
