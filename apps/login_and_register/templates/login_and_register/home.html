@@ -23,7 +23,7 @@
 
 	<div class="column width-67">
 		<div class="column-cell round-top">
-			<h1>Welcome {{ user.first_name }}!</h1>
+			<h1>Your Profile</h3>
 		</div>
 		<div class="column-cell">
 			<table>
@@ -46,12 +46,14 @@
 		</div>
 	</div>
 
-	<div class="column width-33 left">
+	<div class="column width-33">
 		<a href="/play"><input type="submit" class="btn btn-green round-top width-100" value="Play Game"></button></a><a href="/logout"><input type="submit" class="btn btn-red round-bottom width-100" value="Log Out"></button></a>
 		<div class="column-cell round">
 			Log goes here....
 		</div>
 	</div>
+
+	<p>Logged in as <strong>{{ user.username }}</strong> ({{ user.first_name }} {{ user.last_name }})</p>
 
 </body>
 </html>

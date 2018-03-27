@@ -24,7 +24,8 @@ body
 	display: block;
 	min-height: 100%;
 	text-align: center;
-	margin: 5% auto;
+	margin: 2.5% auto;
+	padding-right: 5px;
 }
 
 /* HEADERS */
@@ -34,6 +35,14 @@ h1, h2, h3, h4, h5, h6
 	margin: 10px 0px;
 	text-align: center;
 	color: rgba();
+}
+
+/* PARAGRAPHS */
+
+p
+{
+	padding: 5px;
+	opacity: 0.5;
 }
 
 /* WIDTH */
@@ -96,7 +105,7 @@ h1, h2, h3, h4, h5, h6
 	border-bottom-right-radius: 20px;
 }
 
-@media only screen and (min-width: 1023px) {
+@media only screen and (min-width: 900px) {
 	.responsive-left
 	{
 		margin-right: -2px;
@@ -114,11 +123,17 @@ h1, h2, h3, h4, h5, h6
 	}
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 899px) {
+	html
+	{
+		font-size: 1.5em;
+	}
 	.responsive-left
 	{
 		display: block;
 		margin: auto;
+		width: 85%;
+		max-width: 700px;
 		border-top-left-radius: 20px;
 		border-top-right-radius: 20px;
 		text-align: center;
@@ -128,9 +143,15 @@ h1, h2, h3, h4, h5, h6
 	{
 		display: block;
 		margin: auto;
+		width: 85%;
+		max-width: 700px;
 		border-bottom-left-radius: 20px;
 		border-bottom-right-radius: 20px;
 		text-align: center;
+	}
+	.width-33, .width-50, .width-67, .width-100
+	{
+		width: 96%;
 	}
 }
 
@@ -224,15 +245,27 @@ input[type='submit']
 .btn
 {
 	font-size: 2.25em;
+	margin-left: auto;
+	margin-right: auto;
 	box-shadow: 2px 2px 2px 2px black;
 }
 
-.btn:hover, .btn:focus
+.btn:hover, .btn:focus, .btn:active
 {
 	background: linear-gradient(#FFFFFF,#FFFF88);
 	background-color: #FFFF88;
-	border: 1px solid #880000;
-	color: #880000;
+}
+
+.btn-red:hover, .btn-red:focus, .btn-red:active
+{
+	border: 1px solid #660000;
+	color: #660000;
+}
+
+.btn-green:hover, .btn-green:focus, .btn-green:active
+{
+	border: 1px solid #006600;
+	color: #006600;
 }
 
 .btn-green
