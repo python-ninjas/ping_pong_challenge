@@ -11,5 +11,7 @@ class Game(models.Model):
     loser = models.ForeignKey(User, related_name = "losses")  #Wins and losses need to be tracked. 
     points_win = models.IntegerField()
     points_lose = models.IntegerField()
+    win_exp = models.IntegerField()
+    lose_exp = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
