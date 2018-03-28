@@ -11,12 +11,8 @@ html
 	background: linear-gradient(to right, #00FFFF,#FFFFFF,#00FFFF);
 	font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
 	vertical-align: middle;
+	font-size: 1.2em;
 	height: 100%;
-}
-
-body > *:hover, body > *:focus, body > *:active
-{
-	opacity: 1;
 }
 
 body
@@ -42,7 +38,6 @@ h1, h2, h3, h4, h5, h6
 p
 {
 	padding: 5px;
-	opacity: 0.5;
 }
 
 /* WIDTH */
@@ -106,10 +101,6 @@ p
 }
 
 @media all and (orientation: portrait) {
-	html
-	{
-		font-size: 1.5em;
-	}
 
 	.width-33, .width-50, .width-67, .width-100
 	{
@@ -231,21 +222,13 @@ label
 	margin: 0.25em;
 	width: 30%;
 	max-width: 150px;
-	font-size: 1.1em;
+	font-size: 1em;
 	text-align: right;
 }
 
 input
 {
-	font-size: 1.1em;
-}
-
-input[type='text'], input[type='email'], input[type='password']
-{
-	background: linear-gradient(to right, #FFFFFF,#FFFF88);
-	width: 60%;
-	padding: 0.25em;
-	border-radius: 20px;
+	font-size: 1em;
 }
 
 input:hover
@@ -259,17 +242,38 @@ input:focus
 	background: linear-gradient(#FFFF88,#FFFFFF,#FFFF88);
 }
 
+input[type='text'], input[type='email'], input[type='password']
+{
+	background: linear-gradient(to right, #FFFFFF,#FFFF88);
+	width: 60%;
+	padding: 0.25em;
+	border-radius: 20px;
+}
+
+input[type='number']
+{
+	line-height: 400%;
+	text-align: center;
+	font-size: 1.75em;
+	padding: 0px;
+}
+
 input[type='submit']
 {
-	font-size: 2.25em;
+	font-size: 2em;
 	padding: 10px;
+}
+
+select
+{
+	font-size: 1.25em;
 }
 
 /* BUTTONS */
 
 .btn
 {
-	font-size: 2.25em;
+	font-size: 2em;
 	margin-left: auto;
 	margin-right: auto;
 	box-shadow: 2px 2px 2px 2px black;
@@ -309,17 +313,10 @@ input[type='submit']
 	color: white;	
 }
 
-label
-{
-	margin-top: 10px;
-}
-
 /* MESSAGES */
 .error
 {
-	display: inline-block;
 	background-color: red;
-	width: 100%;
 	color: white;
 }
 
@@ -376,4 +373,16 @@ label
 .right
 {
 	text-align: right;
+}
+
+.slider
+{
+	display: block;
+	text-align: center;
+	width: 200px;
+}
+
+.field
+{
+	height: 50px;
 }

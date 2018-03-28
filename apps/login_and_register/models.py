@@ -85,8 +85,6 @@ class User(models.Model):
     skill = models.IntegerField(default = 1)
     experience = models.IntegerField(default = 0)
     totalscore = models.IntegerField(default = 0)
-    #Sorry to change the database again, but I realized that we didn't need to store the wins and losses
-    #in this model since we can access them using a query into the Game model. 
     objects = UserManager()
     def __str__(self):
-        return self.first_name,self.last_name
+        return self.first_name+' '+self.last_name

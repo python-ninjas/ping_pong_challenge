@@ -73,10 +73,14 @@ def register(request):
 def home(request):
     if 'id' not in request.session:
         return redirect('./')
-    user = User.objects.filter(id = request.session['id']).first()
-    context = {
-        'user': user,
-        'wins': user.wins.count(),
-        'losses': user.losses.count()
-    }
+    try:
+        user = User.objects.filter(id = request.session['id']).first()
+        context = {
+            'user': user,
+            'wins': user.wins.count(),
+            'losses': user.losses.count(),
+            'opponents': User.objects.exclude(id=request.session['id']).order_by("-skill")
+        }
+    except Exception as e:
+        return redirect('./')
     return render(request,'login_and_register/home.html',context)

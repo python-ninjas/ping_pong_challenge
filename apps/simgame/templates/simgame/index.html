@@ -5,25 +5,83 @@
 	<title>Match Options</title>
 	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static 'login_and_register/css/style.css' %}">
+    <style>
+        body
+        {
+            background: url('{% static 'login_and_register/img/ping_pong.png' %}');
+        }
+    </style>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready( function() {
+            var select = $( "#gamePoints" );
+            var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
+            min: 1,
+            max: 21,
+            range: "min",
+            value: select[ 0 ].selectedIndex + 11,
+            slide: function( event, ui ) {
+                select[ 0 ].selectedIndex = ui.value - 1;
+            }
+            });
+            var s = "";
+            for(var i=1;i<=21;i++)
+            {
+                if(i==10)
+                    s += '<option selected>'+i+'</option>';
+                else
+                    s += '<option>'+i+'</option>';
+            }
+            $("#gamePoints").html(s);
+            $("#gamePoints").on( "change", function() {
+                slider.slider( "value", this.selectedIndex + 1 );
+            });
+        });
+
+        function revealSkill(menu) {
+            var skill = document.getElementById(menu.value).getAttribute("data-skill");
+            var name = document.getElementById(menu.value).getAttribute("data-name");
+            if(name === '')
+                name = "Player"
+            document.getElementById("skill-level").innerHTML = name+"'s skill-level is "+skill;
+        }
+    </script>
 </head>
 <body>
-    <h2>Choose your opponent!</h2>
-    <form action="/play/game" method="post">
-        <select name="opp_id">
-            {% for opponent in opponents %}
-                <option value={{opponent.id}}>{{opponent.username}} | {{opponent.skill}}</option>
-            {% endfor %}
-        </select>
-        <h3>Play to how many points?</h3>
-        <input type=number name="maxpoints" min="1" max="21">
-        <br>
-        <input type="submit" value="Begin Game">
-    </form>
-    <br> 
-    
-    
-    <form action='/home'>
-        <input type="submit" value="Cancel">
-    </form>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>     
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="column">
+        <h2>Choose your opponent!</h2>
+        <form action="/play/game" method="post" class="column-cell round-top">
+            {% csrf_token %}
+            <select name="opp_id" onclick="revealSkill(this)" onchange="revealSkill(this)">
+                {% for opponent in opponents %}
+                    <option id={{opponent.id}} value={{opponent.id}} data-skill={{opponent.skill}} data-name={{opponent}}>{{opponent}}</option>
+                {% endfor %}
+            </select>
+            <div id="skill-level">&nbsp;</div>
+            <div class="">
+                <label for="max_points">Maximum points need to win: </label>
+                <select name="max_points" id="gamePoints"></select>
+            </div>
+            <input type="submit" value="Begin Game" class="btn btn-green round width-100">
+        </form>
+        <form action='/home' class="column-cell round-bottom">
+            {% csrf_token %}
+            <input type="submit" value="Cancel" class="btn btn-red round width-100">
+        </form>
+    </div>
+
+    <p>Logged in as <div><strong>{{ user.username }}</strong> ({{ user }})</div></p>
+
 </body>
 </html>
