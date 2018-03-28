@@ -15,15 +15,22 @@
 		{% endfor %}
 	</div>
 	{% endif %}
-    <form action = '/play/game' method = 'post'>
-        <input type="submit" value = "Rematch">
-    </form>
-    <form action = '/play'>
-        <input type='submit' value = 'New Opponent'>
-    </form>
-    <form action = '/home'>
-        <input type='submit' value = 'Home'>
-    </form>
+	<div class="column">
+	    <form action="/play/game" method="post" class="column-cell round-top">
+	    	{% csrf_token _%}
+	    	<input type="hidden" name="opp_id" value="{{ request.session.opp_id }}">
+	    	<input type="hidden" name="max_points" value="{{ request.session.max_points }}">
+	        <input type="submit" value="Rematch" class="btn btn-green round">
+	    </form>
+	    <form action="/play" class="column-cell">
+	        <input type="submit" value="New Opponent" class="btn btn-green round">
+	    </form>
+	    <form action="/home" class="column-cell round-bottom">
+	        <input type="submit" value="Home" class="btn btn-green round">
+	    </form>
+	</div>
+
+    <p>Logged in as <div><strong>{{ user.username }}</strong> ({{ user }})</div></p>
 
 </body>
 </html>

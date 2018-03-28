@@ -63,6 +63,26 @@
 		</div>
 		<div class="column-cell round-bottom">
 			<h2>Chart</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Skill</th>
+						<th>Exper.</th>
+						<th>Total Points</th>
+					</tr>
+				</thead>
+				{% for opponent in opponents %}
+				<tbody>
+					<tr>
+						<th>{{ opponent }}</th>
+						<td>{{ opponent.skill }}</td>
+						<td>{{ opponent.experience }}</td>
+						<td>{{ opponent.totalscore }}</td>
+					</tr>
+				</tbody>
+				{% endfor %}
+			</table>
 		</div>
 	</div>
 
@@ -73,7 +93,7 @@
 		</div>
 	</div>
 
-	<p>Logged in as <strong>{{ user.username }}</strong> ({{ user.first_name }} {{ user.last_name }})</p>
+	<p>Logged in as <div><strong>{{ user.username }}</strong> ({{ user }})</div></p>
 
 </body>
 </html>
