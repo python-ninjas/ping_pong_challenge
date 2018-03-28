@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Login &#38; Register Home</title>
 	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static 'login_and_register/css/style.css' %}">
@@ -26,7 +28,7 @@
 			<h1>Your Profile</h3>
 		</div>
 		<div class="column-cell">
-			<table>
+			<table class="horizontal">
 				<tr>
 					<th>Skill</th>
 					<th>Experience</th>
@@ -37,12 +39,50 @@
 					<td>{{ user.skill }}</td>
 					<td>{{ user.experience }}</td>
 					<td>{{ user.totalscore }}</td>
-					<td>{{ user.num_wins }}/{{ user.num_losses }}</td>
+					<td>{{ wins }}/{{ losses }}</td>
+				</tr>
+			</table>
+			<table class="vertical">
+				<tr>
+					<th>Skill</th>
+					<td>{{ user.skill }}</td>
+				</tr>
+				<tr>
+					<th>Experience</th>
+					<td>{{ user.experience }}</td>
+				</tr>
+				<tr>
+					<th>Total Points</th>
+					<td>{{ user.totalscore }}</td>
+				</tr>
+				<tr>
+					<th>Wins/Losses</th>
+					<td>{{ wins }}/{{ losses }}</td>
 				</tr>
 			</table>
 		</div>
 		<div class="column-cell round-bottom">
 			<h2>Chart</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Skill</th>
+						<th>Exper.</th>
+						<th>Total Points</th>
+					</tr>
+				</thead>
+				{% for opponent in opponents %}
+				<tbody>
+					<tr>
+						<th>{{ opponent }}</th>
+						<td>{{ opponent.skill }}</td>
+						<td>{{ opponent.experience }}</td>
+						<td>{{ opponent.totalscore }}</td>
+					</tr>
+				</tbody>
+				{% endfor %}
+			</table>
 		</div>
 	</div>
 
@@ -53,7 +93,7 @@
 		</div>
 	</div>
 
-	<p>Logged in as <strong>{{ user.username }}</strong> ({{ user.first_name }} {{ user.last_name }})</p>
+	<p>Logged in as <div><strong>{{ user.username }}</strong> ({{ user }})</div></p>
 
 </body>
 </html>

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Login &#38; Register</title>
 	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static 'login_and_register/css/style.css' %}">
@@ -25,7 +26,7 @@
 
 	<div class="column width-67">
 		<div class="column-cell round-top">
-			<h1>Success!<br>Welcome, {{ user.username }}!</h1>
+			<h1>Success!<br>Welcome, {{ user }}!</h1>
 		</div>
 		<div class="column-cell round-bottom">
 			<a href="./">Go Dashboard</a>
