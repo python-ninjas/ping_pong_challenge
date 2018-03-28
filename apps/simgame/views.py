@@ -35,15 +35,19 @@ def play(request):
     y.totalscore += p2points
     y.experience += p2points
     if p1points > p2points:
-        Game.objects.create(winner=x, loser=y,points_win=p1points,points_lose=p2points)
-        x.experience += 10 * y.skill
-        y.experience += 2 * x.skill
+        win_exp = 10*y.skill
+        lose_exp = 2*x.skill
+        x.experience += win_exp
+        y.experience += lose_exp
+        Game.objects.create(winner=x, loser=y,points_win=p1points,points_lose=p2points,win_exp = win_exp, lose_exp = lose_exp)
         messages.success(request,'You win! Congratulations!')
     else: 
-        Game.objects.create(winner=y, loser=x,points_win=p2points,points_lose=p1points)
-        x.experience += 2 * y.skill
-        y.experience += 10 * x.skill
-        messages.error(request,'You lose! Better luck next time!')
+        lose_exp = 2*y.skill
+        win_exp = 10*x.skill
+        x.experience += lose_exp
+        y.experience += win_exp
+        Game.objects.create(winner=y, loser=x,points_win=p2points,points_lose=p1points,win_exp = win_exp, lose_exp = lose_exp)
+        messages.success(request,'You lose! Better luck next time!')
     while x.experience >= x.skill * 50 + 1:
         x.experience -= x.skill * 50 + 1     #Level up! Accounts for gaining multiple levels in a single game, too. 
         x.skill += 1
