@@ -64,6 +64,7 @@
         <form action="/game/play" method="post" class="column-cell round-top">
             {% csrf_token %}
             <select name="opp_id" onclick="revealSkill(this)" onchange="revealSkill(this)">
+                <option id="dummy" value="dummy" data-skill={{user.skill}} data-name="NPC Opponent">NPC Opponent</option>
                 {% for opponent in opponents %}
                     <option id={{opponent.id}} value={{opponent.id}} data-skill={{opponent.skill}} data-name={{opponent}}>{{opponent}}</option>
                 {% endfor %}
