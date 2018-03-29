@@ -36,12 +36,26 @@
 					<th>Wins/Losses</th>
 				</tr>
 				<tr>
-					<td>{{ user.skill }}</td>
-					<td>{{ user.experience }}</td>
-					<td>{{ user.totalscore }}</td>
-					<td>{{ wins }}/{{ losses }}</td>
+					<!-- adding in forms for selected attribute on user dashboard -->
+					<form action="/userskillchart" method="POST">
+						{% csrf_token %}
+					<td><input class="userattr" type="submit" value = {{user.skill}}>
+					</form>
+					<form action="/userexpchart" method="POST">
+						{% csrf_token %}
+					<td><input type="submit" value = {{user.experience }}></td>
+					</form>
+					<form action="/userpointschart" method="POST">
+						{% csrf_token %}
+					<td><input type="submit" value = {{user.totalscore }}></td>
+					</form>
+					<form action="/userwinratiochart" method="POST">
+						{% csrf_token %}
+					<td><input type="submit" value= {{wins }}/{{ losses }}></td>
+					</form>
 				</tr>
 			</table>
+			<embed src= "{% static 'login_and_register/img/userchart.svg' %}">
 			<table class="vertical">
 				<tr>
 					<th>Skill</th>

@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.messages import get_messages
 from ..simgame.models import Game
 from models import *
+import pygal
 
 # Create your views here.
 def index(request):
@@ -84,3 +85,83 @@ def home(request):
     except Exception as e:
         return redirect('./')
     return render(request,'login_and_register/home.html',context)
+# routes for user charts below:
+def userskillchart(request):
+    if request.method == 'POST':
+        user = User.objects.get(id=request.session['id'])
+        allusers = User.objects.all()
+        totalusers = User.objects.all().count()
+        topuser = User.objects.order_by('skill').reverse()[:1]
+        attrsum = 0
+        userchart = pygal.Bar()
+        for user in allusers:
+            attrsum += user.skill
+        userchart.title =  "Skill Levels"
+        userchart.add('You', user.skill)
+        userchart.add("Average", attrsum/totalusers)
+        userchart.add("Top Player", topuser[0].skill)
+        userchart.render_to_file('apps/login_and_register/static/login_and_register/img/userchart.svg')
+    return redirect("/home")
+
+def userexpchart(request):
+    if request.method == 'POST':
+        user = User.objects.get(id=request.session['id'])
+        allusers = User.objects.all()
+        totalusers = User.objects.all().count()
+        topuser = User.objects.order_by('experience').reverse()[:1]
+        attrsum = 0
+        userchart = pygal.Bar()
+        for user in allusers:
+            attrsum += user.experience
+        userchart.title =  "Experience"
+        userchart.add('You', user.experience)
+        userchart.add("Average", attrsum/totalusers)
+        userchart.add("Top Player", topuser[0].experience)
+        userchart.render_to_file('apps/login_and_register/static/login_and_register/img/userchart.svg')
+    return redirect("/home")
+
+def userpointschart(request):
+    if request.method == 'POST':
+        user = User.objects.get(id=request.session['id'])
+        allusers = User.objects.all()
+        totalusers = User.objects.all().count()
+        topuser = User.objects.order_by('totalscore').reverse()[:1]
+        attrsum = 0
+        userchart = pygal.Bar()
+        for user in allusers:
+            attrsum += user.totalscore
+        userchart.title =  "Total Points Scored"
+        userchart.add('You', user.totalscore)
+        userchart.add("Average", attrsum/totalusers)
+        userchart.add("Top Player", topuser[0].totalscore)  
+        userchart.render_to_file('apps/login_and_register/static/login_and_register/img/userchart.svg')
+    return redirect("/home")
+# WIP below currently need to work on floats for ratios
+def userwinratiochart(request):
+    if request.method == 'POST':
+        usergamewins = Game.objects.filter(winner=request.session["id"]).count()
+        usergamelosses = Game.objects.filter(loser=request.session["id"]).count()
+        allusers = User.objects.all()
+        print allusers
+        totalusers = User.objects.all().exclude(totalscore=0).count()
+
+        topuser = Game.objects.order_by('wins').reverse()[:1]
+        
+        attrsum = 0.00
+        userchart = pygal.Bar()
+        topuser = 0.00
+        for user in allusers:
+            userwins = Game.objects.filter(winner= user).count()
+            print "wins", userwins
+            userlosses = Game.objects.filter(loser= user).count()
+            print "losses", userlosses
+            attrsum += userwins/userlosses
+            if userwins/userlosses > topuser:
+                topuser = userwins/userlosses
+        print attrsum
+        userchart.title =  "Win/Loss Ratios"
+        userchart.add('You', usergamewins/usergamelosses)
+        userchart.add("Average", attrsum/totalusers)
+        userchart.add("Top Player", topuser)    
+        userchart.render_to_file('apps/login_and_register/static/login_and_register/img/userchart.svg')
+    return redirect("/home")
