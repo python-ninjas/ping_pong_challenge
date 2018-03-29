@@ -2,13 +2,20 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Game Results</title>
 	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static 'login_and_register/css/style.css' %}">
+	<style>
+		body
+		{
+			background: url('{% static 'login_and_register/img/ping_pong.png' %}');
+		}
+	</style>
 </head>
 <body>
 
-    {% if messages %}
+	{% if messages %}
 	<div class="messages">
 		{% for message in messages %}
 		<p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>		
@@ -16,21 +23,27 @@
 	</div>
 	{% endif %}
 	<div class="column">
-	    <form action="/play/game" method="post" class="column-cell round-top">
-	    	{% csrf_token _%}
-	    	<input type="hidden" name="opp_id" value="{{ request.session.opp_id }}">
-	    	<input type="hidden" name="max_points" value="{{ request.session.max_points }}">
-	        <input type="submit" value="Rematch" class="btn btn-green round">
-	    </form>
-	    <form action="/play" class="column-cell">
-	        <input type="submit" value="New Opponent" class="btn btn-green round">
-	    </form>
-	    <form action="/home" class="column-cell round-bottom">
-	        <input type="submit" value="Home" class="btn btn-green round">
-	    </form>
+		<form action="/game/play" method="post" class="column-cell round-top">
+			{% csrf_token %}
+			<input type="hidden" name="opp_id" value="{{ request.session.opp_id }}">
+			<input type="hidden" name="max_points" value="{{ request.session.max_points }}">
+			<input type="submit" value="Rematch" class="btn btn-green round">
+		</form>
+		<form action="/game" class="column-cell">
+			{% csrf_token %}
+			<input type="submit" value="New Opponent" class="btn btn-green round">
+		</form>
+		<form action="/game/stats" class="column-cell">
+			{% csrf_token %}
+			<input type="submit" value="Stats" class="btn btn-green round">
+		</form>
+		<form action="/home" method="post" class="column-cell round-bottom">
+			{% csrf_token %}
+			<input type="submit" value="Home" class="btn btn-green round">
+		</form>
 	</div>
 
-    <p>Logged in as <div><strong>{{ user.username }}</strong> ({{ user }})</div></p>
+	<p>Logged in as <div><strong>{{ user.username }}</strong> ({{ user }})</div></p>
 
 </body>
 </html>

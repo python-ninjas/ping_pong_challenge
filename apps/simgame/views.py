@@ -1,12 +1,14 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
 from django.contrib.messages import get_messages
-from models import *
+from django.core import serializers
 from ..login_and_register.models import User
+from models import *
 import random
 
-# Create your views here.
 def index(request):
+    if 'id' not in request.session or request.session['id'] == 0 :
+        return redirect('/')
     user = User.objects.filter(id = request.session['id']).first()
     upperbound = user.skill * 4
     lowerbound = user.skill / 4
@@ -16,9 +18,40 @@ def index(request):
     }
     return render(request,'simgame/index.html',context)
 
+# STATS
+
+def stats(request):
+    if 'id' not in request.session or request.session['id'] == 0 :
+        return redirect('/')
+    user = User.objects.filter(id = request.session['id']).first()
+    context = {
+        'user': user,
+        'opponents': User.objects.exclude(id=request.session['id']).order_by("-skill")
+    }   
+    return render(request,'simgame/stats.html',context)
+
+def load_stats(request):
+    games = Game.objects.all()
+    return render(request,'simgame/results_table.html',{"games": games})
+
+def find_stats(request): 
+    user_id = request.session['id']
+    opponent_id = request.POST['opponent']
+    wins = Game.objects.filter(winner__id=user_id).filter(loser__id=opponent_id).order_by("-created_at")
+    losses = Game.objects.filter(loser__id=user_id).filter(winner__id=opponent_id).order_by("-created_at")
+    games = wins | losses        
+    if request.POST['search_by'] == 'Games You Won':
+        games = wins
+    if request.POST['search_by'] == 'Games You Lost':
+        games = losses
+    return render(request,'simgame/results_table.html',{'games': games})
+
+# GAMEPLAY
+
 def play(request):
     request.session['opp_id'] = request.POST['opp_id']
-    request.session['max_points'] = request.POST['max_points']
+    request.session['max_points'] = int(request.POST['max_points'])
+    print request.session['max_points']
     p1points = 0
     p2points = 0 #Player making the challenge is always player 1. 
     x = User.objects.get(id=int(request.session['id']))
@@ -80,7 +113,7 @@ def play(request):
         messages.success(request,'Score: {} to {}'.format(p1points,p2points))
     else:
         messages.error(request,'Score: {} to {}'.format(p1points,p2points))
-    return redirect('/play/result')
+    return redirect('/game/result')
 
 def result(request):
     context = {

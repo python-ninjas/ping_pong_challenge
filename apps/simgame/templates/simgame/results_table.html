@@ -1,0 +1,27 @@
+<table class="info">
+	<thead>
+		<th>Time</th>
+		<th>Win/Lose</th>
+		<th>Score</th>
+		<th>Skill</th>
+		<th>Experience</th>
+	</thead>
+	<tbody>
+		{% for game in games %}
+		<tr>
+			<td>{{ game.created_at|date:"m-d" }} {{ game.created_at|time:"H:i" }}</td>
+			{% if game.winner.id == request.session.id %}
+			<td>Win</td>
+			<td>{{ game.points_win }}</td>
+			<td>{{ game.win_skill }}</td>
+			<td>{{ game.win_tot_exp }}</td>
+			{% else %}
+			<td>Lose</td>
+			<td>{{ game.points_lose }}</td>
+			<td>{{ game.lose_skill }}</td>
+			<td>{{ game.lose_tot_exp }}</td>
+			{% endif %}			
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
