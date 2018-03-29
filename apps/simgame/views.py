@@ -14,7 +14,7 @@ def index(request):
     lowerbound = user.skill / 4
     context = {
         'user': user,
-        'opponents': User.objects.exclude(id=request.session['id'], skill__gt = upperbound, skill__lt = lowerbound).order_by("-skill")
+        'opponents': User.objects.exclude(id=request.session['id']).exclude(skill__gt = upperbound).exclude(skill__lt = lowerbound).order_by("-skill")
     }
     return render(request,'simgame/index.html',context)
 
@@ -80,12 +80,9 @@ def play(request):
             lose_exp = 2*x.skill
             x.experience += win_exp
             y.experience += lose_exp
-            Game.objects.create(winner=x, loser=y,points_win=p1points,points_lose=p2points,win_exp = win_exp, lose_exp = lose_exp)
         else:
             win_exp = 5 * x.skill
-            lose_exp = 1 * x.skill
             x.experience += win_exp
-            Game.objects.create(winner=x,points_win=p1points,points_lose=p2points,win_exp = win_exp, lose_exp = lose_exp)
         messages.success(request,'You win! Congratulations!')
     else: 
         if(request.POST['opp_id'] != "dummy"):
@@ -93,22 +90,31 @@ def play(request):
             win_exp = 10*x.skill
             x.experience += lose_exp
             y.experience += win_exp
-            Game.objects.create(winner=y, loser=x,points_win=p2points,points_lose=p1points,win_exp = win_exp, lose_exp = lose_exp)
         else:
             lose_exp = x.skill
-            win_exp = 5*x.skill
             x.experience+=lose_exp
-            Game.objects.create(loser=x,points_win=p2points,points_lose=p1points,win_exp = win_exp, lose_exp = lose_exp)
-        messages.success(request,'You lose! Better luck next time!')
+        messages.error(request,'You lose! Better luck next time!')
     while x.experience >= x.skill * 50 + 1:
         x.experience -= x.skill * 50 + 1     #Level up! Accounts for gaining multiple levels in a single game, too. 
         x.skill += 1
-        x.save()
     if(request.POST['opp_id'] != "dummy"):
         while y.experience >= y.skill * 50 + 1:
             y.experience -= y.skill * 50 + 1    
             y.skill += 1
-            y.save()
+    x.save()
+    if(request.POST['opp_id'] != "dummy"):
+        y.save()
+    if p1points > p2points:
+        if(request.POST['opp_id'] != "dummy"):
+            Game.objects.create(winner=x, loser=y,points_win=p1points,points_lose=p2points,win_exp = win_exp, lose_exp = lose_exp, win_tot_exp=x.experience, lose_tot_exp=y.experience, win_skill=x.skill, lose_skill=y.skill)
+        else:
+            print str(win_exp) + "win_exp"
+            Game.objects.create(winner=x, points_win=p1points,points_lose=p2points,win_exp = win_exp, win_tot_exp=x.experience, win_skill=x.skill)
+    else:
+        if(request.POST['opp_id'] != "dummy"):
+            Game.objects.create(winner=y, loser=x,points_win=p2points,points_lose=p1points,win_exp = win_exp, lose_exp = lose_exp, win_tot_exp=y.experience, lose_tot_exp=x.experience, win_skill=y.skill, lose_skill=x.skill)
+        else:
+            Game.objects.create(loser=x, points_win=p2points,points_lose=p1points,lose_exp = lose_exp, lose_tot_exp=x.experience, lose_skill=x.skill)
     if p1points > p2points:
         messages.success(request,'Score: {} to {}'.format(p1points,p2points))
     else:
@@ -118,6 +124,5 @@ def play(request):
 def result(request):
     context = {
         'user': User.objects.filter(id = request.session['id']).first(),
-        'opponent': User.objects.filter(id = request.session['opp_id']).first()
     }
     return render(request, 'simgame/result.html',context)

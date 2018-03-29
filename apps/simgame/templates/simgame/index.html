@@ -59,7 +59,7 @@
         {% endfor %}
     </div>
     {% endif %}
-    <div class="column">
+    <div class="column width-50">
         <h2>Choose your opponent!</h2>
         <form action="/game/play" method="post" class="column-cell round-top">
             {% csrf_token %}
@@ -76,14 +76,12 @@
             </div>
             <input type="submit" value="Begin Game" class="btn btn-green round width-100">
         </form>
-        <form action="/game/stats" class="column-cell">
-            {% csrf_token %}
-            <input type="submit" value="Stats" class="btn btn-green round">
-        </form>
-        <form action="/home" method="post" class="column-cell round-bottom">
-            {% csrf_token %}
-            <input type="submit" value="Cancel" class="btn btn-red round width-100">
-        </form>
+        <div class="column-cell">
+            <a href="/game/stats"><button class="btn btn-green round">Stats</button></a>
+        </div>
+        <div class="column-cell round-bottom">
+            <a href="/home"><button class="btn btn-red round">Cancel</button></a>
+        </div>
     </div>
 
     <p>Logged in as <div><strong>{{ user.username }}</strong> ({{ user }})</div></p>

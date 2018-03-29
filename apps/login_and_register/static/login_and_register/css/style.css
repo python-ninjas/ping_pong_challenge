@@ -224,6 +224,12 @@ table, tr
 	box-shadow: 2px 2px 2px 2px black;
 }
 
+.width-50 > .column-cell
+{
+	min-width: 150px;
+	max-width: 400px;
+}
+
 /* FORMS */
 
 form
