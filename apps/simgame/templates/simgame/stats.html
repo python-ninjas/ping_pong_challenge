@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Game Results</title>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'login_and_register/css/style.css' %}">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(document).ready( function() {
+
+			$('#search_by, #opponent').change(function() {
+				if($("#opponent").val() == '')
+				{
+					$('#stats').html('')
+					return;
+				}
+				$('#stats').html('Loading....')
+				setTimeout(function() {},1000)
+				$.ajax({
+					url: 'stats/find',
+					method: 'post',
+					data: $(this).parent().serialize(),
+					success: function(serverResponse) {
+						$('#stats').html(serverResponse)
+					}
+				})
+			})
+
+		});
+	</script></head>
+	<style>
+		body
+		{
+			background: url('{% static 'login_and_register/img/ping_pong.png' %}');
+		}
+	</style>
+<body>
+
+	{% if messages %}
+	<div class="messages">
+		{% for message in messages %}
+		<p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>		
+		{% endfor %}
+	</div>
+	{% endif %}
+	<div class="column width-25">
+		<form class="column-cell round-top">
+			{% csrf_token %}
+			Search by games where you:<br>
+			<select id="search_by" name="search_by">
+				<option value="Games You Played">Played</option>
+				<option value="Games You Won">Beat</option>
+				<option value="Games You Lost">Lost to</option>				
+			</select>
+			<select id="opponent" name="opponent">
+					<option value="" selected></option>
+				{% for opponent in opponents %}
+					<option value="{{ opponent.id }}" data-opponent="{{ opponent }}">{{ opponent }}</option>
+				{% endfor %}
+			</select>
+			<div id="stats"></div>
+		</form>
+		<form action="/game" class="column-cell">
+			{% csrf_token %}
+			<input type="submit" value="Continue Playing" class="btn btn-green round">
+		</form>
+		<form action="/home" method="post" class="column-cell round-bottom">
+			{% csrf_token %}
+			<input type="submit" value="Home" class="btn btn-green round">
+		</form>
+	</div>
+
+	<p>Logged in as <div><strong>{{ user.username }}</strong> ({{ user }})</div></p>
+
+</body>
+</html>

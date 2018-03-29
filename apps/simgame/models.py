@@ -9,9 +9,13 @@ from ..login_and_register.models import User
 class Game(models.Model):
     winner = models.ForeignKey(User, related_name = "wins")   #This is the only place where 
     loser = models.ForeignKey(User, related_name = "losses")  #Wins and losses need to be tracked. 
-    points_win = models.IntegerField()
-    points_lose = models.IntegerField()
-    win_exp = models.IntegerField()
-    lose_exp = models.IntegerField()
+    points_win = models.IntegerField(default = 0)
+    points_lose = models.IntegerField(default = 0)
+    win_exp = models.IntegerField(default = 0)
+    lose_exp = models.IntegerField(default = 0)
+    win_tot_exp = models.IntegerField(default = 0)
+    lose_tot_exp = models.IntegerField(default = 0)
+    win_skill = models.IntegerField(default = 0)
+    lose_skill = models.IntegerField(default = 0)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)

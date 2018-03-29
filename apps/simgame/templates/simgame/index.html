@@ -2,17 +2,11 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Match Options</title>
 	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static 'login_and_register/css/style.css' %}">
-    <style>
-        body
-        {
-            background: url('{% static 'login_and_register/img/ping_pong.png' %}');
-        }
-    </style>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
@@ -49,6 +43,12 @@
             document.getElementById("skill-level").innerHTML = name+"'s skill-level is "+skill;
         }
     </script>
+    <style>
+        body
+        {
+            background: url('{% static 'login_and_register/img/ping_pong.png' %}');
+        }
+    </style>
 </head>
 <body>
 
@@ -61,7 +61,7 @@
     {% endif %}
     <div class="column">
         <h2>Choose your opponent!</h2>
-        <form action="/play/game" method="post" class="column-cell round-top">
+        <form action="/game/play" method="post" class="column-cell round-top">
             {% csrf_token %}
             <select name="opp_id" onclick="revealSkill(this)" onchange="revealSkill(this)">
                 {% for opponent in opponents %}
@@ -75,7 +75,11 @@
             </div>
             <input type="submit" value="Begin Game" class="btn btn-green round width-100">
         </form>
-        <form action='/home' class="column-cell round-bottom">
+        <form action="/game/stats" class="column-cell">
+            {% csrf_token %}
+            <input type="submit" value="Stats" class="btn btn-green round">
+        </form>
+        <form action="/home" method="post" class="column-cell round-bottom">
             {% csrf_token %}
             <input type="submit" value="Cancel" class="btn btn-red round width-100">
         </form>
