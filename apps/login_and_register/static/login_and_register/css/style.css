@@ -30,7 +30,6 @@ h1, h2, h3, h4, h5, h6
 {
 	margin: 10px 0px;
 	text-align: center;
-	color: rgba();
 }
 
 /* PARAGRAPHS */
@@ -70,6 +69,12 @@ p
 	margin: 20px 0px;
 }
 
+.round-tiny
+{
+	border-radius: 10px;
+	margin: 10px 0px;	
+}
+
 .round-top
 {
 	display: block;
@@ -93,11 +98,25 @@ p
 	border-bottom-left-radius: 20px;
 }
 
+.round-left-tiny
+{
+	margin-left: 10px;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
 .round-right
 {
 	margin-right: 20px;
 	border-top-right-radius: 20px;
 	border-bottom-right-radius: 20px;
+}
+
+.round-right-tiny
+{
+	margin-right: 10px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
 }
 
 @media all and (orientation: portrait) {
@@ -293,6 +312,18 @@ select
 
 /* BUTTONS */
 
+#skill, #exp, #points, #ratio
+{
+	display: inline;
+	width: auto;
+}
+
+#get-skill, #get-exp, #get-points, #get-ratio
+{
+	font-size: 0.7em;
+	padding: 5px;
+}
+
 .btn
 {
 	font-size: 2em;
@@ -319,6 +350,12 @@ select
 	color: #006600;
 }
 
+.btn-blue:hover, .btn-blue:focus, .btn-blue:active
+{
+	border: 1px solid #000066;
+	color: #000066;
+}
+
 .btn-green
 {
 	background: linear-gradient(#006600,#003300);
@@ -333,6 +370,15 @@ select
 	background-color: #660000;
 	border: 1px solid #660000;
 	color: white;	
+}
+
+.btn-blue
+{
+	background: linear-gradient(#000066,#000033);
+	background-color: #000066;
+	border: 1px solid #000066;
+	font-size: 0.5em;
+	color: white;
 }
 
 /* MESSAGES */
@@ -429,11 +475,6 @@ select
 	border: none;
 	font-size: .5em;
 }
-.skill, .points, .exp, .ratio{
-	display: inline;
-	font-size: .3em;
-	padding: 0;
-}
 .loadgraphs{
 	display: block;
 	font-size: .3em;;
@@ -448,10 +489,8 @@ select
 	text-align: center;
 }
 .loadgraphs:hover{
-	background: linear-gradient(#006600,#003300);
-	background-color: #003300;
-	color: white;
-	box-shadow: none;
+	background: linear-gradient(#FFFFFF,#FFFF88);
+	background-color: #FFFF88;
 }
 #charts{
 	min-width: 150px;
@@ -459,5 +498,5 @@ select
 }
 .chartdisplay{
 	overflow-y: scroll;
-	height: 340px;
+	height: 270px;
 }

@@ -59,7 +59,8 @@
             })
             // below jquery for show and hiding charts when hovered 
             $(function(){
-                $(".skill").hover(function(){
+
+                $("#skill").click(function(){
                     $("#skillchart").show();
                     $("#expchart").hide();
                     $("#pointschart").hide();
@@ -68,7 +69,7 @@
                 })
             })
             $(function(){
-                $(".exp").hover(function(){
+                $("#exp").click(function(){
                     $("#skillchart").hide();
                     $("#expchart").show();
                     $("#pointschart").hide();
@@ -77,7 +78,7 @@
                 })
             })
             $(function(){
-                $(".points").hover(function(){
+                $("#points").click(function(){
                     $("#skillchart").hide();
                     $("#expchart").hide();
                     $("#pointschart").show();
@@ -86,7 +87,7 @@
                 })
             })
             $(function(){
-                $(".ratio").hover(function(){
+                $("#ratio").click(function(){
                     $("#skillchart").hide();
                     $("#expchart").hide();
                     $("#pointschart").hide();
@@ -127,12 +128,17 @@
             <select id="opp_id" name="opp_id" onclick="revealSkill(this)" onchange="revealSkill(this)">
                 <option id="dummy" value="dummy" data-skill={{user.skill}} data-name="NPC Opponent">NPC Opponent</option>
                 {% for opponent in opponents %}
-                    <option id={{opponent.id}} value={{opponent.id}} data-skill={{opponent.skill}} data-name={{opponent}}>{{opponent}}</option>
+                    {% if opponent.id == request.session.opp_selected %}
+                        <option id={{opponent.id}} value={{opponent.id}} data-skill={{opponent.skill}} data-name={{opponent}} selected>{{opponent}}</option>
+                    {% else %}
+                        <option id={{opponent.id}} value={{opponent.id}} data-skill={{opponent.skill}} data-name={{opponent}}>{{opponent}}</option>
+                    }
+                    {% endif %}
                 {% endfor %}
             </select>
             <div id="skill-level">&nbsp;</div>
             <div class="">
-                <label for="max_points">Maximum points need to win: </label>
+                <label for="max_points">Minimum points need to win: </label>
                 <select name="max_points" id="gamePoints"></select>
             </div>
             <input type="submit" value="Begin Game" class="btn btn-green round width-100">
@@ -140,33 +146,33 @@
         <div id="charts" class="column-cell">
             <h4>You vs Opponent</h4>
             <h6>(click on button after opponent selected)</h6>
-            <form class="loadgraphs" action="/game/opponentcharts" method="POST">
+            <form action="/game/opponentcharts" method="POST">
                 {% csrf_token %}
-                <input class="loadgraphs" type="submit" value="Load Graphs">
+                <input class="btn btn-green round" type="submit" value="Load Graphs">
                 <input class="opponentid" type="hidden" name="opponentid" value= "dummy">
             </form>
-            <form class="skill"  method="POST">
+            <form id="skill" method="POST">
                 {% csrf_token %}
-                <input class="oppattr" type="submit" value="Skill">
+                <input id="get-skill" class="btn round-left-tiny" type="submit" value="Skill">
             </form>
-            <form class="exp"  method="POST">
+            <form id="exp" method="POST">
                 {% csrf_token %}
-                <input class="oppattr" type="submit" value ="Exp">
+                <input id="get-exp" class="btn btn-blue" type="submit" value ="Exp">
             </form>
-            <form class="points"  method="POST">
+            <form id="points" method="POST">
                 {% csrf_token %}
-                <input class="oppattr" type="submit" value = "Total Points">
+                <input id="get-points" class="btn btn-blue" type="submit" value = "Total Points">
             </form>
-            <form class="ratio"  method="POST">
+            <form id="ratio" method="POST">
                 {% csrf_token %}
-                <input class="oppattr" type="submit" value= "Win Ratio">
+                <input id="get-ratio" class="btn btn-blue round-right-tiny" type="submit" value= "Win Ratio">
             </form>
             <div class="chartdisplay">
                 <div class="oppcharts">
-                    <embed id="skillchart" src= "{% static 'simgame/img/opponentskillchart.svg' %}">
-                    <embed id="expchart" src= "{% static 'simgame/img/opponentexpchart.svg' %}">
-                    <embed id="pointschart" src= "{% static 'simgame/img/opponentpointschart.svg' %}">
-                    <embed id="ratiochart" src= "{% static 'simgame/img/opponentratiochart.svg' %}">
+                    <embed class="btn round width-100" id="skillchart" src= "{% static 'simgame/img/opponentskillchart.svg' %}">
+                    <embed class="btn round width-100" id="expchart" src= "{% static 'simgame/img/opponentexpchart.svg' %}">
+                    <embed class="btn round width-100" id="pointschart" src= "{% static 'simgame/img/opponentpointschart.svg' %}">
+                    <embed class="btn round width-100" id="ratiochart" src= "{% static 'simgame/img/opponentratiochart.svg' %}">
                 </div>
             </div>
         </div>

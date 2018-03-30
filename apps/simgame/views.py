@@ -142,6 +142,7 @@ def opponentcharts(request):
         return redirect("/game")
     user = User.objects.get(id=request.session['id'])
     opponent = User.objects.get(id=request.POST['opponentid'])
+    request.session['opp_selected'] = request.POST['opponentid']
     opponentskillchart = pygal.Bar(legend_at_bottom=True, legend_box_size=25, style=custom_style)
     opponentskillchart.title =  "Skill Levels"
     opponentskillchart.add('You', user.skill) 

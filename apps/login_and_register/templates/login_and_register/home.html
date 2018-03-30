@@ -55,7 +55,7 @@
 					</form>
 				</tr>
 			</table>
-			<embed src= "{% static 'login_and_register/img/userchart.svg' %}">
+			<embed class="btn round width-100" src= "{% static 'login_and_register/img/userchart.svg' %}">
 			<table class="vertical">
 				<tr>
 					<th>Skill</th>
@@ -106,15 +106,12 @@
 				</tbody>
 				{% endfor %}
 			</table>
-			<embed src= "{% static 'login_and_register/img/alloppchart.svg' %}">
+			<embed class="btn round width-100" src= "{% static 'login_and_register/img/alloppchart.svg' %}">
 		</div>
 	</div>
 
 	<div class="column width-33">
 		<a href="/game"><input type="submit" class="btn btn-green round-top width-100" value="Play Game"></button></a><a href="/logout"><input type="submit" class="btn btn-red round-bottom width-100" value="Log Out"></button></a>
-		<div class="column-cell round">
-			Log goes here....
-		</div>
 	</div>
 
 	<p>Logged in as <div><strong>{{ user.username }}</strong> ({{ user }})</div></p>
