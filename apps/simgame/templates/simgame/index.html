@@ -64,6 +64,7 @@
                     $("#expchart").hide();
                     $("#pointschart").hide();
                     $("#ratiochart").hide();
+                    return false;
                 })
             })
             $(function(){
@@ -72,6 +73,7 @@
                     $("#expchart").show();
                     $("#pointschart").hide();
                     $("#ratiochart").hide();
+                    return false;
                 })
             })
             $(function(){
@@ -80,6 +82,7 @@
                     $("#expchart").hide();
                     $("#pointschart").show();
                     $("#ratiochart").hide();
+                    return false;
                 })
             })
             $(function(){
@@ -134,6 +137,39 @@
             </div>
             <input type="submit" value="Begin Game" class="btn btn-green round width-100">
         </form>
+        <div id="charts" class="column-cell">
+            <h4>You vs Opponent</h4>
+            <h6>(click on button after opponent selected)</h6>
+            <form class="loadgraphs" action="/game/opponentcharts" method="POST">
+                {% csrf_token %}
+                <input class="loadgraphs" type="submit" value="Load Graphs">
+                <input class="opponentid" type="hidden" name="opponentid" value= "dummy">
+            </form>
+            <form class="skill"  method="POST">
+                {% csrf_token %}
+                <input class="oppattr" type="submit" value="Skill">
+            </form>
+            <form class="exp"  method="POST">
+                {% csrf_token %}
+                <input class="oppattr" type="submit" value ="Exp">
+            </form>
+            <form class="points"  method="POST">
+                {% csrf_token %}
+                <input class="oppattr" type="submit" value = "Total Points">
+            </form>
+            <form class="ratio"  method="POST">
+                {% csrf_token %}
+                <input class="oppattr" type="submit" value= "Win Ratio">
+            </form>
+            <div class="chartdisplay">
+                <div class="oppcharts">
+                    <embed id="skillchart" src= "{% static 'simgame/img/opponentskillchart.svg' %}">
+                    <embed id="expchart" src= "{% static 'simgame/img/opponentexpchart.svg' %}">
+                    <embed id="pointschart" src= "{% static 'simgame/img/opponentpointschart.svg' %}">
+                    <embed id="ratiochart" src= "{% static 'simgame/img/opponentratiochart.svg' %}">
+                </div>
+            </div>
+        </div>
         <div class="column-cell">
             <a href="/game/stats"><button class="btn btn-green round">Stats</button></a>
         </div>
@@ -142,38 +178,7 @@
         </div>
     </div>
     <!-- styling needed for Javiers edits below for charts-->
-    <div id="charts" class="column-cell">
-        <h4>You vs Opponent</h4>
-        <h6>(click on button after opponent selected)</h6>
-        <div class="chartdisplay">
-            <form class="skill" action="/game/opponentcharts" method="POST">
-                {% csrf_token %}
-                <input class="oppattr" type="submit" value="Skill">
-                <input class="opponentid" type="hidden" name="opponentid" value= {{request.session.opp_id}}>
-            </form>
-            <form class="exp" action="/game/opponentcharts" method="POST">
-                {% csrf_token %}
-                <input class="oppattr" type="submit" value ="Exp">
-                <input class="opponentid" type="hidden" name="opponentid" value= {{request.session.opp_id}}>
-            </form>
-            <form class="points" action="/game/opponentcharts" method="POST">
-                {% csrf_token %}
-                <input class="oppattr" type="submit" value = "Total Points">
-                <input class="opponentid" type="hidden" name="opponentid" value= {{request.session.opp_id}}>
-            </form>
-            <form class="ratio" action="/game/opponentcharts" method="POST">
-                {% csrf_token %}
-                <input class="oppattr" type="submit" value= "Win Ratio">
-                <input class="opponentid" type="hidden" name="opponentid" value= {{request.session.opp_id}}>
-            </form>
-            <div class="oppcharts">
-                <embed id="skillchart" src= "{% static 'simgame/img/opponentskillchart.svg' %}">
-                <embed id="expchart" src= "{% static 'simgame/img/opponentexpchart.svg' %}">
-                <embed id="pointschart" src= "{% static 'simgame/img/opponentpointschart.svg' %}">
-                <embed id="ratiochart" src= "{% static 'simgame/img/opponentratiochart.svg' %}">
-            </div>
-        </div>
-    </div>
+    
         <!-- end of javiers edits -->
 
     <p>Logged in as <div><strong>{{ user.username }}</strong> ({{ user }})</div></p>

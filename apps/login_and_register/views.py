@@ -157,15 +157,20 @@ def userwinratiochart(request):
         topuser = 0.00
         for user in allusers:
             userwins = Game.objects.filter(winner= user).count()
-            print "wins", userwins
+            userwins = userwins*1.00
             userlosses = Game.objects.filter(loser= user).count()
-            print "losses", userlosses
+            userlosses = userlosses*1.00
+            if userlosses == 0 and userwins == 0:
+                continue
             attrsum += userwins/userlosses
             if userwins/userlosses > topuser:
                 topuser = userwins/userlosses
         print attrsum
         userchart.title =  "Win/Loss Ratios"
-        userchart.add('You', usergamewins/usergamelosses)
+        if usergamewins == 0 and usergamelosses == 0:
+            userchart.add('You', 0)
+        else:
+            userchart.add('You', usergamewins/usergamelosses)
         userchart.add("Average", attrsum/totalusers)
         userchart.add("Top Player", topuser)    
         userchart.render_to_file('apps/login_and_register/static/login_and_register/img/userchart.svg')
