@@ -139,7 +139,7 @@ def result(request):
 ### route for opponent vs user charts
 def opponentcharts(request):
     if request.POST['opponentid'] == "dummy":
-        redirect("/game")
+        return redirect("/game")
     user = User.objects.get(id=request.session['id'])
     opponent = User.objects.get(id=request.POST['opponentid'])
     opponentskillchart = pygal.Bar(legend_at_bottom=True, legend_box_size=25, style=custom_style)
