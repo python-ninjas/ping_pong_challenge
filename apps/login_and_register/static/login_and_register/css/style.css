@@ -434,6 +434,25 @@ select
 	font-size: .3em;
 	padding: 0;
 }
+.loadgraphs{
+	display: block;
+	font-size: .3em;;
+	margin: 5px auto;
+	background: linear-gradient(#006600,#003300);
+	background-color: #006600;
+	border: 1px solid #006600;
+	color: white;
+	border-radius: 10px;
+	border: none;
+	font-weight: bold;
+	text-align: center;
+}
+.loadgraphs:hover{
+	background: linear-gradient(#006600,#003300);
+	background-color: #003300;
+	color: white;
+	box-shadow: none;
+}
 #charts{
 	min-width: 150px;
 	max-width: 400px;

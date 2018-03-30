@@ -164,13 +164,21 @@ def opponentcharts(request):
     usergamewins = usergamewins*1.00
     usergamelosses = Game.objects.filter(loser=request.session["id"]).count()
     usergamelosses = usergamelosses*1.00
+    
     opponentwins = Game.objects.filter(winner=request.POST['opponentid']).count()
     opponentlosses = Game.objects.filter(loser=request.POST['opponentid']).count()
     opponentwins = opponentwins*1.00
     opponentlosses = opponentlosses*1.00
     opponentratiochart = pygal.Bar(legend_at_bottom=True, legend_box_size=25, style=custom_style)
+
     opponentratiochart.title = "Win/Loss Ratio"
-    opponentratiochart.add('You',usergamewins/usergamelosses)
-    opponentratiochart.add(opponent.first_name+opponent.last_name,opponentwins/opponentlosses)
+    if usergamewins == 0 and usergamelosses == 0:
+        opponentratiochart.add('You', 0)
+    else:
+        opponentratiochart.add('You', usergamewins/usergamelosses)
+    if opponentlosses == 0 and opponentwins == 0:
+        opponentratiochart.add(opponent.first_name+opponent.last_name,0)
+    else:
+        opponentratiochart.add(opponent.first_name+opponent.last_name, opponentwins/opponentlosses)
     opponentratiochart.render_to_file('apps/simgame/static/simgame/img/opponentratiochart.svg')
     return redirect("/game")
