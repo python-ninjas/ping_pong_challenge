@@ -33,6 +33,64 @@
             $("#gamePoints").on( "change", function() {
                 slider.slider( "value", this.selectedIndex + 1 );
             });
+            // Jquery Javier for oppenent charts hidden values from selected opponent
+            $(function() {
+                var oppid = $('#opp_id');
+                oppid.change(function() {
+                    $('.opponentid').val(oppid.val());
+                });
+            });
+            $(function(){
+                var selectOptions;
+                if(localStorage.getItem("selectedOptions")){
+                    selectOptions = JSON.parse(localStorage.getItem("selectedOptions"));
+                    Object.keys(selectOptions).forEach(function(select){
+                        $("select[name="+select+"").val(selectOptions[select]);
+                    });
+                } else{
+                    selectOptions = {};
+                }
+                $("select").change(function(){
+                    var $this = $(this),
+                        selectName = $this.attr("name");
+                    selectOptions[selectName] = $this.val();
+                    localStorage.setItem("selectedOptions", JSON.stringify(selectOptions));
+                })
+            })
+            // below jquery for show and hiding charts when hovered 
+            $(function(){
+                $(".skill").hover(function(){
+                    $("#skillchart").show();
+                    $("#expchart").hide();
+                    $("#pointschart").hide();
+                    $("#ratiochart").hide();
+                })
+            })
+            $(function(){
+                $(".exp").hover(function(){
+                    $("#skillchart").hide();
+                    $("#expchart").show();
+                    $("#pointschart").hide();
+                    $("#ratiochart").hide();
+                })
+            })
+            $(function(){
+                $(".points").hover(function(){
+                    $("#skillchart").hide();
+                    $("#expchart").hide();
+                    $("#pointschart").show();
+                    $("#ratiochart").hide();
+                })
+            })
+            $(function(){
+                $(".ratio").hover(function(){
+                    $("#skillchart").hide();
+                    $("#expchart").hide();
+                    $("#pointschart").hide();
+                    $("#ratiochart").show();
+                })
+            })
+            // end of Javier edits
         });
 
         function revealSkill(menu) {
@@ -63,7 +121,7 @@
         <h2>Choose your opponent!</h2>
         <form action="/game/play" method="post" class="column-cell round-top">
             {% csrf_token %}
-            <select name="opp_id" onclick="revealSkill(this)" onchange="revealSkill(this)">
+            <select id="opp_id" name="opp_id" onclick="revealSkill(this)" onchange="revealSkill(this)">
                 <option id="dummy" value="dummy" data-skill={{user.skill}} data-name="NPC Opponent">NPC Opponent</option>
                 {% for opponent in opponents %}
                     <option id={{opponent.id}} value={{opponent.id}} data-skill={{opponent.skill}} data-name={{opponent}}>{{opponent}}</option>
@@ -83,6 +141,40 @@
             <a href="/home"><button class="btn btn-red round">Cancel</button></a>
         </div>
     </div>
+    <!-- styling needed for Javiers edits below for charts-->
+    <div id="charts" class="column-cell">
+        <h4>You vs Opponent</h4>
+        <h6>(click on button after opponent selected)</h6>
+        <div class="chartdisplay">
+            <form class="skill" action="/game/opponentcharts" method="POST">
+                {% csrf_token %}
+                <input class="oppattr" type="submit" value="Skill">
+                <input class="opponentid" type="hidden" name="opponentid" value= {{request.session.opp_id}}>
+            </form>
+            <form class="exp" action="/game/opponentcharts" method="POST">
+                {% csrf_token %}
+                <input class="oppattr" type="submit" value ="Exp">
+                <input class="opponentid" type="hidden" name="opponentid" value= {{request.session.opp_id}}>
+            </form>
+            <form class="points" action="/game/opponentcharts" method="POST">
+                {% csrf_token %}
+                <input class="oppattr" type="submit" value = "Total Points">
+                <input class="opponentid" type="hidden" name="opponentid" value= {{request.session.opp_id}}>
+            </form>
+            <form class="ratio" action="/game/opponentcharts" method="POST">
+                {% csrf_token %}
+                <input class="oppattr" type="submit" value= "Win Ratio">
+                <input class="opponentid" type="hidden" name="opponentid" value= {{request.session.opp_id}}>
+            </form>
+            <div class="oppcharts">
+                <embed id="skillchart" src= "{% static 'simgame/img/opponentskillchart.svg' %}">
+                <embed id="expchart" src= "{% static 'simgame/img/opponentexpchart.svg' %}">
+                <embed id="pointschart" src= "{% static 'simgame/img/opponentpointschart.svg' %}">
+                <embed id="ratiochart" src= "{% static 'simgame/img/opponentratiochart.svg' %}">
+            </div>
+        </div>
+    </div>
+        <!-- end of javiers edits -->
 
     <p>Logged in as <div><strong>{{ user.username }}</strong> ({{ user }})</div></p>
 

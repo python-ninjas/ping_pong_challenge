@@ -408,3 +408,37 @@ select
 {
 	height: 50px;
 }
+/* below JAviers css additions. please change if wanted or needed*/
+.oppattr{
+	padding: 0;
+	background-color: blue;
+	color: white;
+	border-radius: 10px;
+	border: none;
+	font-weight: bold;
+}
+.oppattr:hover{
+	background-color: springgreen;
+	color: black;
+}
+.userattr{
+	font-size: .4em;
+	padding: 0;
+	font-weight: bold;
+	background-color: transparent;
+	border: none;
+	font-size: .5em;
+}
+.skill, .points, .exp, .ratio{
+	display: inline;
+	font-size: .3em;
+	padding: 0;
+}
+#charts{
+	min-width: 150px;
+	max-width: 400px;
+}
+.chartdisplay{
+	overflow-y: scroll;
+	height: 340px;
+}

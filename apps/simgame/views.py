@@ -5,6 +5,15 @@ from django.core import serializers
 from ..login_and_register.models import User
 from models import *
 import random
+from pygal.style import Style
+import random, pygal
+
+custom_style = Style(
+    title_font_size=30,
+    legend_font_size=30,
+    label_font_size=25,
+    tooltip_font_size=30,
+    )
 
 def index(request):
     if 'id' not in request.session or request.session['id'] == 0 :
@@ -126,3 +135,42 @@ def result(request):
         'user': User.objects.filter(id = request.session['id']).first(),
     }
     return render(request, 'simgame/result.html',context)
+
+### route for opponent vs user charts
+def opponentcharts(request):
+    if request.POST['opponentid'] == "dummy":
+        redirect("/game")
+    user = User.objects.get(id=request.session['id'])
+    opponent = User.objects.get(id=request.POST['opponentid'])
+    opponentskillchart = pygal.Bar(legend_at_bottom=True, legend_box_size=25, style=custom_style)
+    opponentskillchart.title =  "Skill Levels"
+    opponentskillchart.add('You', user.skill) 
+    opponentskillchart.add(opponent.first_name+opponent.last_name, opponent.skill) 
+    opponentskillchart.render_to_file('apps/simgame/static/simgame/img/opponentskillchart.svg')
+
+    opponentexpchart = pygal.Bar(legend_at_bottom=True, legend_box_size=25, style=custom_style)
+    opponentexpchart.title =  "Experience"
+    opponentexpchart.add('You', user.experience) 
+    opponentexpchart.add(opponent.first_name+opponent.last_name, opponent.experience) 
+    opponentexpchart.render_to_file('apps/simgame/static/simgame/img/opponentexpchart.svg')
+
+    opponentpointschart = pygal.Bar(legend_at_bottom=True, legend_box_size=25, style=custom_style)
+    opponentpointschart.title = "Total Points"
+    opponentpointschart.add('You', user.totalscore) 
+    opponentpointschart.add(opponent.first_name+opponent.last_name, opponent.totalscore) 
+    opponentpointschart.render_to_file('apps/simgame/static/simgame/img/opponentpointschart.svg')
+
+    usergamewins = Game.objects.filter(winner=request.session["id"]).count()
+    usergamewins = usergamewins*1.00
+    usergamelosses = Game.objects.filter(loser=request.session["id"]).count()
+    usergamelosses = usergamelosses*1.00
+    opponentwins = Game.objects.filter(winner=request.POST['opponentid']).count()
+    opponentlosses = Game.objects.filter(loser=request.POST['opponentid']).count()
+    opponentwins = opponentwins*1.00
+    opponentlosses = opponentlosses*1.00
+    opponentratiochart = pygal.Bar(legend_at_bottom=True, legend_box_size=25, style=custom_style)
+    opponentratiochart.title = "Win/Loss Ratio"
+    opponentratiochart.add('You',usergamewins/usergamelosses)
+    opponentratiochart.add(opponent.first_name+opponent.last_name,opponentwins/opponentlosses)
+    opponentratiochart.render_to_file('apps/simgame/static/simgame/img/opponentratiochart.svg')
+    return redirect("/game")

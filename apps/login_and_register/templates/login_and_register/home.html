@@ -39,19 +39,19 @@
 					<!-- adding in forms for selected attribute on user dashboard -->
 					<form action="/userskillchart" method="POST">
 						{% csrf_token %}
-					<td><input class="userattr" type="submit" value = {{user.skill}}></td>
+					<td class="userattr"><input class="userattr" type="submit" value = {{user.skill}}></td>
 					</form>
 					<form action="/userexpchart" method="POST">
 						{% csrf_token %}
-					<td><input type="submit" value = {{user.experience }}></td>
+					<td class="userattr"><input class="userattr" type="submit" value = {{user.experience }}></td>
 					</form>
 					<form action="/userpointschart" method="POST">
 						{% csrf_token %}
-					<td><input type="submit" value = {{user.totalscore }}></td>
+					<td class="userattr"><input class="userattr" type="submit" value = {{user.totalscore }}></td>
 					</form>
 					<form action="/userwinratiochart" method="POST">
 						{% csrf_token %}
-					<td><input type="submit" value= {{ wins }}/{{ losses }}></td>
+					<td class="userattr"><input class="userattr" type="submit" value= {{ wins }}/{{ losses }}></td>
 					</form>
 				</tr>
 			</table>
@@ -76,14 +76,23 @@
 			</table>
 		</div>
 		<div class="column-cell round-bottom">
-			<h2>Chart</h2>
+			<h2>All Other Players</h2>
 			<table>
 				<thead>
 					<tr>
 						<th>Name</th>
-						<th>Skill</th>
-						<th>Exper.</th>
-						<th>Total Points</th>
+						<form class="userattr" action="/alloppskillchart" method="POST">
+							{% csrf_token %}
+						<th class="userattr"><input class="userattr" type="submit" value = "Skill"></th>
+						</form>
+						<form class="userattr" action="/alloppexpchart" method="POST">
+							{% csrf_token %}
+						<th class="userattr"><input class="userattr" type="submit" value = "Exp"></th>
+						</form>
+						<form class="userattr" action="/allopp_pointschart" method="POST">
+							{% csrf_token %}
+						<th class="userattr"><input class="userattr" type="submit" value = "Total Points"></th>
+						</form>
 					</tr>
 				</thead>
 				{% for opponent in opponents %}
@@ -97,6 +106,7 @@
 				</tbody>
 				{% endfor %}
 			</table>
+			<embed src= "{% static 'login_and_register/img/alloppchart.svg' %}">
 		</div>
 	</div>
 
